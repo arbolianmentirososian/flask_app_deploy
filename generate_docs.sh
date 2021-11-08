@@ -16,5 +16,7 @@ if [[ -z $python_dirs ]]; then
     exit 1
 fi
 
-pdoc --pdf --force --output-dir docs/ "$python_dirs" > $markdown_file
+echo "$python_dirs"
+
+pdoc --pdf --force --output-dir docs/ $python_dirs > $markdown_file
 awk -i inplace '{sub(/{#id}/, sprintf("{#id%d}", ++i))} 1' $markdown_file
