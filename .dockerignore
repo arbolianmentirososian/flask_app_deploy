@@ -1,0 +1,52 @@
+# files and directories with compiled bytecode
+__pycache__
+*.py[cod]
+
+# pytest code coverage reports
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+cover/
+
+# virtual environments
+venv/
+
+# unit tests reports
+test/*.xml
+htmlcov/
+.tox/
+.nox/
+.cache
+nosetests.xml
+.hypothesis/
+
+# any log files
+*.log
+
+# sonar scanner local analysis directory
+.scannerwork/
+
+# directory with files generated with pytest cache plugin 
+.pytest_cache/
+
+# git directory and .gitignore file
+.git/
+.gitignore
+
+# documentation
+docs/
+
+# scripts used with Jenkins
+ci-build.sh
+generate_docs.sh
+regression-tests.sh
+vulnerability-tests.sh
+
+# settings and properties used during the development process only
+README.md
+Jenkinsfile
+pytest.ini
+Dockerfile
+.dockerignore
