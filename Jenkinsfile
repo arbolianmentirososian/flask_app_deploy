@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                lock(label: "Lock access to DB", variable: "database_lock", quantity: 1) {
+                lock(resource: null, label: "Lock access to DB", variable: "database_lock", quantity: 1) {
                     script {
                     sh """#!/bin/bash
                         python3 -m venv venv
