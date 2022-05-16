@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                lock("db_lock") {
+                lock(label: "unit_test_lock", quantity: 1) {
                     script {
                     sh """#!/bin/bash
                         python3 -m venv venv
