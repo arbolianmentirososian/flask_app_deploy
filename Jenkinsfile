@@ -23,7 +23,8 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                script {
+                lock("db_lock") {
+                    script {
                     sh """#!/bin/bash
                         python3 -m venv venv
                         source ./venv/bin/activate
@@ -31,6 +32,7 @@ pipeline {
                         pip install pytest pytest-cov
                         pytest --cov=src/ --cov-report=xml:test/coverage.xml --junitxml=test/results.xml
                     """
+                    }
                 }
                 junit(testResults: 'test/results.xml', allowEmptyResults: true)
             }
