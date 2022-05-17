@@ -3,6 +3,7 @@ pipeline {
     environment {
         GIT_EMAIL = sh(script: "git show -s --format='%ae' HEAD | tr -d '\n'", returnStdout: true)
         DOCKERFILE_EXISTS = fileExists 'Dockerfile'
+        LOCK_NAME = "db_lock"
     }
     options {
 	    buildDiscarder(logRotator(artifactNumToKeepStr: '7'))
@@ -23,7 +24,7 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                lock('lock_test') {
+                lock('${LOCK_NAME}') {
                     script {
                     sh """#!/bin/bash
                         python3 -m venv venv
@@ -65,7 +66,7 @@ pipeline {
         }
         stage('Static analysis') {
             steps {
-                lock('lock_test') {
+                lock('${LOCK_NAME}') {
                     withSonarQubeEnv('SonarQube') {
                         sh """
                             ${tool("SonarQubeScanner")}/bin/sonar-scanner \
