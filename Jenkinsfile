@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                lock('${LOCK_NAME}') {
+                lock(LOCK_NAME) {
                     script {
                     sh """#!/bin/bash
                         python3 -m venv venv
@@ -66,7 +66,7 @@ pipeline {
         }
         stage('Static analysis') {
             steps {
-                lock('${LOCK_NAME}') {
+                lock(LOCK_NAME) {
                     withSonarQubeEnv('SonarQube') {
                         sh """
                             ${tool("SonarQubeScanner")}/bin/sonar-scanner \
