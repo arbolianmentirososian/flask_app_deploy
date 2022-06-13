@@ -19,7 +19,7 @@ pipeline {
         GIT_EMAIL = sh(script: "git show -s --format='%ae' HEAD | tr -d '\n'", returnStdout: true)
         DOCKERFILE_EXISTS = fileExists 'Dockerfile'
         LOCK_NAME = "db_lock"
-        VERSION = sh(script: "python -c 'import version; print(version.__version__)'", returnStdout: true).trim()
+        VERSION = sh(script: "python3 -c 'import version; print(version.__version__)'", returnStdout: true).trim()
         ENV = get_env_for_branch("${env.BRANCH_NAME}")
 
     }
