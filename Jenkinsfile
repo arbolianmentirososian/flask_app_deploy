@@ -35,7 +35,7 @@ pipeline {
                     COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true, ).trim()
                     VERSION = sh(script: "python3 -c 'import version; print(version.__version__)'", returnStdout: true).trim()
                     def env = get_env_for_branch("${env.BRANCH_NAME}")
-                    TAG = "${VERSION}-{env}"
+                    TAG = "${VERSION}-${env}"
                     if (fileExists('ci-build.sh')) {
                         sh 'bash ./ci-build.sh PREPROD'
                     } else {
