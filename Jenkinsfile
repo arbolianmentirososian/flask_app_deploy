@@ -20,6 +20,8 @@ pipeline {
         DOCKERFILE_EXISTS = fileExists 'Dockerfile'
         LOCK_NAME = "db_lock"
         VERSION = sh(script: "python -c 'import version; print(version.__version__)'", returnStdout: true).trim()
+        ENV = get_env_for_branch("${env.BRANCH_NAME}")
+
     }
     options {
 	    buildDiscarder(logRotator(artifactNumToKeepStr: '7'))
@@ -104,8 +106,7 @@ pipeline {
         stage('Git tag') {
 		    steps {
                 scripts {
-                    env = get_env_for_branch("${env.BRANCH_NAME}")
-			        echo "Tag name: ${VERSION}-${env}"
+			        echo "Tag name: ${VERSION}-${ENV}"
                 }
             }
 		}
