@@ -105,7 +105,7 @@ pipeline {
         }
         stage('Git tag') {
 		    steps {
-                scripts {
+                script {
 			        echo "Tag name: ${VERSION}-${ENV}"
                 }
             }
