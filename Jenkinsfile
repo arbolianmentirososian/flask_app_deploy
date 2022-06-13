@@ -85,5 +85,10 @@ pipeline {
                 }
             }
         }
+        stage('Git tag') {
+		    steps {
+			    echo "Branch name: " + env.BRANCH_NAME
+            }
+		}
     }
 }
