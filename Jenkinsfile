@@ -1,3 +1,5 @@
+#!/usr/bin/groovy
+
 def get_env_for_branch(String branch_name) {
   if (branch_name =~ "release/sit") {
     return "SIT"
@@ -106,7 +108,7 @@ pipeline {
         stage('Git tag') {
 		    steps {
                 script {
-			        def env = getEnvForBranch("${env.BRANCH_NAME}")
+			        def env = get_env_for_branch("${env.BRANCH_NAME}")
 					TAG = "${VERSION}-${tag}"
                     echo TAG
                 }
