@@ -106,7 +106,9 @@ pipeline {
         stage('Git tag') {
 		    steps {
                 script {
-			        echo "Tag name: ${VERSION}-${ENV}"
+			        def env = getEnvForBranch("${env.BRANCH_NAME}")
+					TAG = "${VERSION}-${tag}"
+                    echo TAG
                 }
             }
 		}
