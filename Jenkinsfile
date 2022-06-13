@@ -1,9 +1,25 @@
+def get_env_for_branch(String branch_name) {
+  if (branch_name =~ "release/sit") {
+    return "SIT"
+  } else if (branch_name =~ "release/uat") {
+    return "UAT"
+  } else if (branch_name =~ "master") {
+    return "PREPROD"
+  } else if (branch_name =~ "support") {
+    return "SIT2"
+  } else {
+    return null
+  }
+}
+
+
 pipeline {
     agent any
     environment {
         GIT_EMAIL = sh(script: "git show -s --format='%ae' HEAD | tr -d '\n'", returnStdout: true)
         DOCKERFILE_EXISTS = fileExists 'Dockerfile'
         LOCK_NAME = "db_lock"
+        VERSION = sh(script: "python -c 'import version; print(version.__version__)'", returnStdout: true).trim()
     }
     options {
 	    buildDiscarder(logRotator(artifactNumToKeepStr: '7'))
@@ -87,7 +103,8 @@ pipeline {
         }
         stage('Git tag') {
 		    steps {
-			    echo "Branch name: " + env.BRANCH_NAME
+                env = get_env_for_branch("${env.BRANCH_NAME}")
+			    echo "Tag name: ${VERSION}-${env}"
             }
 		}
     }
